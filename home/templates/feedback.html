@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {%block title%}Feedback | Collabs {%endblock title%}
+{% block body %}
+
+<div class="container">
+  <form method="POST" style="margin: 20px 20px 20px 20px">
+    {% csrf_token %}
+    <span class="card-title flow-text">Feedback form! </span>
+    <div class="row">
+      <div class="input-field col s12 m6 l6">
+        <label for="id_name" class="black-text"
+          ><i class="material-icons left">mode_edit</i>Name:</label
+        >
+        {{form.name}}
+      </div>
+
+      <div class="input-field col s12 m6 l6">
+        <label for="id_name" class="black-text"
+          ><i class="material-icons left">mode_edit</i>Email:</label
+        >
+        {{form.email}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="id_name" class="black-text">
+          <i class="material-icons left">mode_edit</i>Feedback:
+        </label>
+        {{form.feedback}}
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-default black white-text">
+      <b>Submit</b>
+    </button>
+
+    {% if message %}
+    <span class="helper-text red-text">message</span>
+    {% endif %}
+  </form>
+</div>
+{% endblock body %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block title %}error | Collabs{% endblock title %}
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    {% if error %}
+    <div class="col s12">
+      <h3 class="center">
+        {{error}} <i class="material-icons small">mood_bad</i>
+      </h3>
+    </div>
+    {% endif %} {% for pass_error in password_error %}
+    <div class="col s12">
+      <h3 class="center">
+        {{pass_error|cut:"["|cut:"]"}}
+        <i class="material-icons small">mood_bad</i>
+      </h3>
+    </div>
+    {% endfor %} {% load static %}
+    <div class="col s12">
+      <img
+        src="{% static 'oops.jpg' %}"
+        width="100%"
+        height="auto"
+        class="center"
+      />
+    </div>
+  </div>
+</div>
+{% endblock body %}

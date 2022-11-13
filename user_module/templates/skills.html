@@ -1,0 +1,217 @@
+{% extends 'base_user_module.html' %}
+{% block title %}Skills | Collabs{% endblock title %}
+
+{% block body %}
+
+<div class="row card-rounded black" style="margin:20px 20px;">
+    <div class="col s12">
+      
+      <h4 class="flow-text center white-text">Skills</h4>
+      <ul class="tabs tabs-fixed-width tabs-transparent" style="border-radius: 10px; margin: 20px 0 0 0;">
+        <li class="tab col s3"><a href="#test1" class="active flow-text">My Dashboard</a></li>
+        <li class="tab col s3"><a href="#test2" class="flow-text">Public Dashboard</a></li>
+      </ul>
+
+    </div>
+
+    <div id="test1" class="col s12">
+      
+      <div class="row">
+        <i class="material-icons left white-text" style="padding-left: 20px">view_list</i><h5 class="header white-text lighten-2">My Dashboard</h5>
+        
+        <div class="col s12 m6">
+          
+          <div class="card card-rounded blue-grey" style="margin:10px 10px;">
+            <div class="card-content card-rounded white-text ">
+              
+              <span class="card-title flow-text center"><b>Add New Skill</b></span>
+              <p>Hey ! {{user|capfirst}} you can add your skills by filling the below form</p><br>
+              
+              <form method='POST' action="skills">
+                
+                {% csrf_token %}
+                <i class=" material-icons right">mode_edit</i>
+                <label for="id_skill_name" class="white-text"><h6>Skill :</h6></label>
+                {{form.skill_name}}
+                <i class=" material-icons right">mode_edit</i>
+                <label for="id_skill_description" class="white-text"><h6>Description :</h6></label>
+                {{form.skill_description}}
+                <i class=" material-icons right">mode_edit</i>
+                <label for="id_skill_link" class="white-text"><h6>Link :<h6></label>
+                {{form.skill_link}}   
+                <center><br>
+                <button type="submit" name="submit" value="save" class="btn btn-default white hoverable black-text button-rounded"><b>Save</b></button>
+                </center>
+              
+              </form>
+            
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col s12 m6"> 
+
+          <div class="card card-rounded blue-grey" style="margin:10px 10px;">
+            <div class="card-content white-text">
+              
+              <span class="card-title flow-text center"><b>Skills you mentioned....</b></span>
+              
+              <ul class="collection border-none">
+                {% for obj in page_obj_1 %}
+                  <li class="collection-item hoverable flow-text blue-grey darken-4" style="margin: 0 20px 5px 20px;">
+                    <div>
+                      {% if page_obj_1|first|stringformat:'s' == obj.skill_name|stringformat:'s' %} 
+                        {{obj.skill_name|capfirst}}
+                        <a href="skills/{{obj.id}}/" class="secondary-content"><i class="material-icons small circle white-text tooltipped"
+                        data-position="top" data-tooltip="Open" style="margin:0 0 0 10px;">chevron_right</i></a> <span class="new badge  red darken-4 "></span>                   
+                      {% endif %}
+                      {% if page_obj_1|first|stringformat:'s' != obj.skill_name|stringformat:'s' %} 
+                        {{obj.skill_name|capfirst}}
+                        <a href="skills/{{obj.id}}/" class="secondary-content"><i class="material-icons small circle white-text tooltipped"
+                        data-position="top" data-tooltip="Open" style="margin:0 0 0 10px;">chevron_right</i></a>  
+                      {% endif %}                       
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+
+              <center>
+                <ul class="pagination">
+                  {% if page_obj_1.has_previous %}
+                    <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2" href="?page=1">
+                    <i class="material-icons black-text">first_page</i></a></li>
+                    <li class="waves-effect"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2" href="?page={{ page_obj_1.previous_page_number }}">
+                    <i class="material-icons black-text">chevron_left</i></a></li>
+                  {% endif %}
+
+                  {% for num in page_obj_1.paginator.page_range %}
+                    {% if page_obj_1.number == num %}
+                      <li class="waves-effect hoverable active"><a class="btn btn-info mb-4 purple darken-4 darken-2" href="?page={{ num }}">{{ num }}</a></li>
+                    {% elif num > page_obj_1.number|add:'-3' and num < page_obj_1.number|add:'3' %}
+                      <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2 black-text" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+
+                  {% if page_obj_1.has_next %}
+                    <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2 black-text" href="?page={{ page_obj_1.next_page_number }}">
+                    <i class="material-icons">chevron_right</i></a></li>
+                    <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2 black-text" href="?page={{ page_obj_1.paginator.num_pages }}">
+                    <i class="material-icons">last_page</i></a></li>
+                  {% endif %}
+                </ul>
+              </center><br>
+
+            </div>
+          </div>        
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6 l6">
+          <div class="card card-rounded blue-grey" style="margin:10px 10px;">
+            <div class="card-content white-text">
+              <span class="card-title flow-text center"><b>Skills you bookmarked....</b></span>
+              <ul class="collection border-none">
+                  {% for obj in page_obj_2 %}
+                    <li class="collection-item hoverable flow-text blue-grey darken-4" style="margin: 0 20px 5px 20px;">
+                      <div>
+                        {% if page_obj_2|first|stringformat:'s' == obj.bookmark_name|stringformat:'s' %}   
+                          <a href="skills/{{obj.bookmark_id}}/" class="white-text">{{obj.bookmark_name|capfirst}}
+                          <i class="material-icons small circle white-text tooltipped right" data-position="top" data-tooltip="Open">chevron_right</i>
+                          <span class="new badge  light-green accent-3 black-text"></span></a>
+                        {% endif %}
+                        {% if page_obj_2|first|stringformat:'s' != obj.bookmark_name|stringformat:'s' %}   
+                          <a href="skills/{{obj.bookmark_id}}/" class="white-text">{{obj.bookmark_name|capfirst}}
+                          <i class="material-icons small circle white-text tooltipped right" data-position="top" data-tooltip="Open">chevron_right</i></a>
+                        {% endif %}                    
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              <center>
+                <ul class="pagination">
+                  {% if page_obj_1.has_previous %}
+                    <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2" href="?page=1">
+                    <i class="material-icons black-text">first_page</i></a></li>
+                    <li class="waves-effect"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2" href="?page={{ page_obj_1.previous_page_number }}">
+                    <i class="material-icons black-text">chevron_left</i></a></li>
+                  {% endif %}
+                  {% for num in page_obj_1.paginator.page_range %}
+                    {% if page_obj_1.number == num %}
+                      <li class="waves-effect hoverable active"><a class="btn btn-info mb-4 purple darken-4 darken-2" href="?page={{ num }}">{{ num }}</a></li>
+                    {% elif num > page_obj_1.number|add:'-3' and num < page_obj_1.number|add:'3' %}
+                      <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2 black-text" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if page_obj_1.has_next %}
+                    <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2 black-text" href="?page={{ page_obj_1.next_page_number }}">
+                    <i class="material-icons">chevron_right</i></a></li>
+                    <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2 black-text" href="?page={{ page_obj_1.paginator.num_pages }}">
+                    <i class="material-icons">last_page</i></a></li>
+                  {% endif %}
+                </ul>
+              </center><br>
+            </div>
+          </div>
+        </div>
+      </div>    
+    </div>
+
+    <div id="test2" class="col s12">
+      <div class="row">
+      <i class="material-icons left white-text" style="padding-left: 20px">view_list</i><h5 class="header white-text lighten-2">Public Dashboard</h5>
+        <div class="col s12">    
+          <div class="card card-rounded blue-grey" style="margin:10px 10px;">
+            <div class="card-content">
+              <span class="card-title black-text flow-text center  white-text"><b>Skills among the Public...</b></span>  
+              <div class="row">
+              <div class="container">
+                {% for skill_model in page_obj %}
+                 <div class="col s12">        
+                  <div class="card card-rounded hoverable black" style="margin:10px 10px;">
+                    <div class="card-content white-text">
+                      <a href="skills/{{ skill_model.id }}/" class="white-text">
+                      <span class="card-title center flow-text"><b>{{skill_model.skill_name|capfirst}}</b></span>
+                      <p class="p-justify">{{skill_model.skill_description|capfirst}}</p><br>
+                      <div class="card-action">
+                      {{skill_model.user|capfirst}}
+                      <span class="right">{{skill_model.skill_date}}</span></a>
+                      </div>
+                    </div>
+                  </div>      
+                </div>
+                {% endfor %}
+                <center>
+                  <ul class="pagination">
+                    {% if page_obj_1.has_previous %}
+                      <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2" href="?page=1">
+                      <i class="material-icons black-text">first_page</i></a></li>
+                      <li class="waves-effect"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2" href="?page={{ page_obj_1.previous_page_number }}">
+                      <i class="material-icons black-text">chevron_left</i></a></li>
+                    {% endif %}
+                    {% for num in page_obj_1.paginator.page_range %}
+                      {% if page_obj_1.number == num %}
+                        <li class="waves-effect hoverable active"><a class="btn btn-info mb-4 purple darken-4 darken-2" href="?page={{ num }}">{{ num }}</a></li>
+                      {% elif num > page_obj_1.number|add:'-3' and num < page_obj_1.number|add:'3' %}
+                        <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2 black-text" href="?page={{ num }}">{{ num }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if page_obj_1.has_next %}
+                      <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2 black-text" href="?page={{ page_obj_1.next_page_number }}">
+                      <i class="material-icons">chevron_right</i></a></li>
+                      <li class="waves-effect hoverable"><a class="btn btn-outline-info mb-4 purple darken-4 darken-2 black-text" href="?page={{ page_obj_1.paginator.num_pages }}">
+                      <i class="material-icons">last_page</i></a></li>
+                    {% endif %}
+                  </ul>
+                </center>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>       
+      </div>
+    </div>
+</div>
+  
+{% endblock body %}
+

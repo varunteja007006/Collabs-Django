@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <title>{%block title%} {%endblock title%}</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      {% load static %}
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script> html {scroll-behavior: smooth;}</script>
+      <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css'%} "  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="{% static 'css/style.css'%} "  media="screen,projection"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body class="">
+      <nav class="black" role="navigation" style="padding-left:10px;">
+        <div class="nav-wrapper">
+          <a href="/" class="brand-logo">Collabs</a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="skills"><b>Skills</b></a></li>
+            <li><a href="projects"><b>Projects</b></a></li>
+            <li><a class="dropdown-trigger btn button-rounded white black-text" href="#!" data-target="navdown">
+            <b>{{user|capfirst}}</b>
+            <i class="material-icons right">arrow_drop_down</i></a></li>
+          </ul>
+          <ul id='navdown' class='dropdown-content z-depth-0 transparent'>
+            <li class="button-rounded white" style="margin:4px 0;">
+            <a href="profile" class='black-text navbtn'><i class="material-icons black-text">face</i> Profile</a></li>
+            <li class="button-rounded white" style="margin:2px 0;">
+            <a href="logout" class='black-text navbtn'><i class="material-icons black-text">power_settings_new</i> Logout</a></li>
+          </ul>  
+          <ul id="nav-mobile" class="sidenav">
+            <li><a href="skills">Skills</a></li>
+            <li><a href="projects">Projects</a></li>
+            <li><a href="profile">Profile</a></li>
+            <li><a href="logout">Logout</a></li>
+          </ul>
+          <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+      </nav>
+      <main>
+    {% block body %}
+    {% endblock body %}
+      </main>
+      <footer class="page-footer bg-navi-gradient black">
+        <div class="container">
+          <div class="row">
+            <div class="col l4 m4 s12 left">
+              <h5 class="white-text">Visit Us</h5>
+              <li class="divider" tabindex="-1"></li>
+              <p class="grey-text text-lighten-4"><h6>Address:</h6> Vanilla Junction, <br> Almonds, <br> Cashews, 
+              <br> PIN: 12345<br> </p>
+            </div>
+            <div class="col l4 m4 s12 left-align">
+            <h5 class="white-text">Contact Us</h5>
+            <li class="divider" tabindex="-1"></li>
+            <h6 >Phone-number:</h6> 123456789 <br> <h6>E-mail:</h6> xxxxxxx@yyyyy.zzz</p>
+            </div>
+            <div class="col l3 s12 right">
+              <h5 class="white-text">Connect</h5>
+              <ul>
+                <li class="divider" tabindex="-1"></li>
+                <li><a class="white-text" href="#!">Facebook</a></li>
+                <li><a class="white-text" href="#!">Instagram</a></li>
+                <li><a class="white-text" href="#!">Telegram</a></li>
+                <li><a class="white-text" href="#!">Paypal</a></li>
+                <li><a class="white-text" href="#!">Gpay</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <div class="container">
+            collabs@2021
+          </div>
+        </div>
+      </footer>
+      <!--  Scripts-->
+      {% load static %}
+      <script type="text/javascript" src="{%static 'js/bin/materialize.js'%}"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script>
+        $(document).ready(function(){
+          $('.sidenav').sidenav({edge:'left'});
+        })
+        $(document).ready(function(){
+          $('.carousel').carousel();
+        })
+        $(document).ready(function(){
+          $('.materialboxed').materialbox();
+        })
+        $(document).ready(function(){
+          $('.modal').modal();
+        });  
+        $(document).ready(function(){
+          $('.tabs').tabs();
+        });
+        $(document).ready(function(){
+          $('.collapsible').collapsible();
+        }); 
+        $(document).ready(function(){
+          $('.tooltipped').tooltip();
+        });
+        $('.dropdown-trigger').dropdown({coverTrigger:false,hover:true,constrainWidth:false});
+        $('.dropdown-trigger1').dropdown({coverTrigger:false,constrainWidth:false});
+        $('.dropdown-trigger2').dropdown({coverTrigger:false,constrainWidth:false});
+        $(document).ready(function() {
+        M.updateTextFields();
+        });
+        $(document).ready(function(){
+          $('select').formSelect();
+        });
+        $(document).ready(function(){
+          $(".navbtn").hover(function(){
+            $(this).css("border-radius", "15px");
+          },
+          function(){
+            $(this).css("border-radius", "15px");
+          }); 
+        });  
+      </script>
+    </body>
+</html>

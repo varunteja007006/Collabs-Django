@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Login | Collabs{% endblock title %}
+{% block body %}
+
+<div class="container">
+  <ul class="collapsible">
+    <li class="active">
+        <div class="collapsible-header center-align black white-text"><b>Login</b></div>
+        <div class="collapsible-body white">
+            <div class="container">
+              <form method="POST">
+                  {% csrf_token %}
+                  <div class="input-field">
+                    <label for="username" class="">Username</label>
+                    <input type="text" class="form-control" id="username" name="username">
+                  </div>
+                  <div class="input-field">
+                    <label for="password" class="">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                  </div>  
+                  <br>
+                  <center>
+                  <button type="submit" name='submit' value='login' class="btn btn-default black white-text"><b>Login</b></button>
+                  <p><span class="helper-text"><a href="/password-reset"><b>Forgot Password??</b></a></span></p>                  
+                  </center>
+              </form>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="collapsible-header center-align black white-text"><b>Sign Up</b></div>
+        <div class="collapsible-body white">
+            <div class="container">
+              <form  method="POST">
+                  {% csrf_token %}
+                    <div class="input-field">
+                      <label for="username" class="">Username</label>
+                      <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="input-field">
+                      <label for="email" class="">Email address</label>
+                      <input type="email" class="form-control" id="email" name="email" >
+                    </div>
+                    <div class="input-field">
+                      <label for="password" class="">Password</label>
+                      <input type="password" class="form-control" id="password" name="password" >
+                    </div> 
+                    <div class="input-field">
+                      <label for="confirm_password" class="">Confirm password</label>
+                      <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                    </div><br>
+                    <center>
+                    <button type="submit" name='submit' value='signup' class="btn btn-default black white-text"><b>Signup</b></button><br><br>
+              </form>
+            </div>      
+        </div>
+    </li>
+  </ul>
+</div>
+<center><p class="flow-text">{{success}}</p></center>
+
+{% endblock body %}

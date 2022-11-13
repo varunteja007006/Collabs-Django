@@ -1,0 +1,43 @@
+.card-rounded {
+    border-radius: 25px !important; }
+
+.p-justify {
+    text-align: justify !important;
+    text-justify: inter-word !important; }
+
+.button-rounded {
+    border-radius: 15px !important; }
+
+.border-none {
+    border: 0 !important; }
+
+.button-position-card {
+    position: absolute; top:20% !important; }
+  
+.html {
+    scroll-behavior: smooth !important;}   
+
+
+.btn-update {
+    padding: 0.7em 1.5em;
+    border: none;
+    color: #fff;
+    background: linear-gradient(to bottom, #2980b9 50%, #3498db 50%);
+    background-size: 100% 200%;
+    background-position: left bottom;
+  }
+
+.btn-update:hover {
+    background-position: right top;
+  }
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+    flex: 1 0 auto;
+  }   
+    

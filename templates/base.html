@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <title>{%block title%} {%endblock title%}</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      {% load static %}
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script> html {scroll-behavior: smooth;}</script>
+      <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css'%}"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="{% static 'css/style.css'%}"  media="screen,projection"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+  <body style="">
+    <nav role="navigation" class="black" style="padding-left:10px;">
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo ">Collabs</a>
+        <ul class="right hide-on-med-and-down" style="">
+          <li><a href="/" ><i class="material-icons">home</i></a></li>
+          <li><a href="/login"><b>login</b></a></li>
+        </ul>
+        <ul id="nav-mobile" class="sidenav">
+          <li><a href="/"><i class="material-icons">home</i>Home</a></li>
+          <li><a href="/login">login</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+  <main>
+  {% block body %}
+  {% endblock body %}
+  </main>
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large white pulse tooltipped" href='/feedback' data-position="left" data-tooltip="Feedback form">
+      <i class="large material-icons black-text">mode_edit</i>
+    </a>
+  </div>
+    <footer class="page-footer bg-navi-gradient black">
+      <div class="container">
+        <div class="row">
+          <div class="col l4 m4 s12 left">
+            <h5 class="white-text">Visit Us</h5>
+            <li class="divider" tabindex="-1"></li>
+            <p class="grey-text text-lighten-4"><h6>Address:</h6> Vanilla Junction, <br> Almonds, <br> Cashews, 
+            <br> PIN: 123456789.<br> </p>
+          </div>
+          <div class="col l4 m4 s12 left-align">
+          <h5 class="white-text">Contact Us</h5>
+          <li class="divider" tabindex="-1"></li>
+          <h6 >Phone-number:</h6> 123456789 <br> <h6>E-mail:</h6> xxxxxxx@yyyyy.zzz</p>
+          </div>
+          <div class="col l3 s12 right">
+            <h5 class="white-text">Connect</h5>
+            <ul>
+              <li class="divider" tabindex="-1"></li>
+              <li><a class="white-text" href="#!">Facebook</a></li>
+              <li><a class="white-text" href="#!">Instagram</a></li>
+              <li><a class="white-text" href="#!">Telegram</a></li>
+              <li><a class="white-text" href="#!">Paypal</a></li>
+              <li><a class="white-text" href="#!">Gpay</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          collabs@2021
+        </div>
+      </div>
+    </footer>
+  </html>

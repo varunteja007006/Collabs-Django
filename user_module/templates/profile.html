@@ -1,0 +1,309 @@
+{% extends 'base_user_module.html' %}
+{% block title %}Profile | Collabs{% endblock title %}
+
+{% block body %}
+<div class="row card-rounded z-depth-2 black" style="margin:20px 20px 20px 20px;">
+  <div class="col s12" style="min-height: 300px">
+    <h4 class="flow-text center white-text">Profile</h4>
+
+    <div class="card-panel card-rounded z-depth-2 white" style="margin:20px 20px 20px 20px;">
+
+      {% if form %}
+      <span class="card-title right">
+        <a class="btn modal-trigger btn-flat button-rounded" href="#add_biodata" onmouseover="this.style.backgroundColor='#000000';this.style.color='#ffffff'"
+          onmouseout="this.style.backgroundColor='transparent';this.style.color='inherit'">
+        <i class="material-icons tooltipped" data-position="top" data-tooltip="Add Biodate">create</i></a>
+      </span>
+      {% endif %}
+      
+      {% if update_form %}
+      <span class="card-title right">
+        <a class="btn modal-trigger btn-flat button-rounded" href="#update_biodata" onmouseover="this.style.backgroundColor='#000000';this.style.color='#ffffff'"
+          onmouseout="this.style.backgroundColor='transparent';this.style.color='inherit'">
+        <i class="material-icons tooltipped" data-position="top" data-tooltip="Update Biodate">create</i></a>
+      </span>
+      {% endif %}
+
+      <div class="row">
+
+        <div class="col s12 m2 l2" style="margin:10px 0 10px 10px">
+          <ul>
+            {% for profile in profile_obj %}
+              <li><img src="{{profile.profile_pic.url}}" class="card-rounded z-depth-2" width="150px" height="150px"></li>
+            {% endfor %}
+          </ul>
+        </div>      
+
+        <div class="col s12 m4 l4 black-text" style="margin:20px 10px 10px 0">
+          <div class="row">
+
+            <div class="col s12">
+
+              <table class="highlight">
+                <tbody>
+                  <tr>
+                    <td><h6><i class=" material-icons left">person</i>Name: {{user|capfirst}}</h6></td>
+                  </tr>
+                  <tr>
+                    <td><h6><i class=" material-icons left">email</i>Email: {{user.email}}</h6></td>
+                  </tr>                
+                {% for profile in profile_obj  %}
+                  <tr>
+                    <td><h6><i class=" material-icons left">phone</i>Phone number: {{profile.phone_number}}</h6></td>
+                  </tr>
+                  <tr>
+                    <td><h6><i class=" material-icons left">insert_link</i><a href="{{profile.github}}" class="black-text">{{profile.github}}</h6></a>
+                      <span class="helper-text center">Github link</span></td>
+                  </tr>
+                  <tr>
+                    <td><h6><i class=" material-icons left">insert_link</i><a href="{{profile.discord}}" class="black-text">{{profile.discord}}</h6></a>
+                      <span class="helper-text">Discord link</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h6><i class=" material-icons left">school</i>Education</h6>
+                      <p>College: {{profile.college_name|capfirst}}</p>
+                      {% if profile.degree_name %}
+                        <p>{{profile.degree_name|capfirst}}, {{profile.course_name|capfirst}}</p> 
+
+                        <p>Year: {{profile.year_of_joining}}, Semester: {{profile.ongoing_course_semester}}</p>
+                      {% endif %}  
+                    </td>
+                  </tr>  
+                   
+                 {%endfor%}
+                </tbody>
+              </table>
+
+            </div>
+          
+          </div>
+          
+        </div> 
+
+        <div class="col s12 m5 l5 card-rounded z-depth-2 black white-text" style="margin:0 10px 10px 10px; min-height:300px">
+          <ul style="margin:10px 10px">
+            <li class="truncate center"><h6 class="flow-text">Bio</h6></li>
+          {% for profile in profile_obj  %}    
+            {% if profile.biography %}
+              <p style="text-align: justify;"><em>{{profile.biography}}</em></p>
+            {% else %}
+                <p class="center"><em>Your bio is not updated</em></p>
+            {% endif %}  
+          {% endfor %} 
+          </ul>        
+        </div>
+
+      </div>
+
+    </div>
+
+      {% if form %}
+      <div id="add_biodata" class="modal card-rounded">
+        <div class="modal-content black">
+
+          <div class="row">
+            <form class="col s12" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="card card-rounded z-depth-2 white">
+                <div class="card-content">
+                  <span class="card-title flow-text">About you</span>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="id_biography" class="black-text"><i class=" material-icons left">mode_edit</i>Bio:</label>
+                      {{form.biography}}
+                      <span class="helper-text">Tell everyone about your personal qualities here like passion, hardworking, etc..</span>
+                    </div>
+                  </div>  
+
+                  <div class="row">  
+                    <div class="col s12 m6 l6">
+                      <label for="id_phone_number" class="black-text"><i class=" material-icons left">phone</i>Phone number:</label>                 
+                      {{form.phone_number}}
+                    </div>
+                    <div class="col s12 m6 l6">
+                      <label for="id_profile_pic" class="black-text"><i class=" material-icons left">face</i>Profile pic:</label>                 
+                      <p>{{form.profile_pic}}</p>
+                    </div>                     
+                  </div>
+
+                  <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                      <label for="id_github" class="black-text"><i class=" material-icons left">insert_link</i>Github:</label>                 
+                      {{form.github}}
+                      <span class="helper-text">This is your github repository link which can people to know your work as well as help in collaborating with you..</span>
+                    </div>  
+                    <div class="input-field col s12 m6 l6">  
+                      <label for="id_discord" class="black-text"><i class=" material-icons left">insert_link</i>Discord:</label>                 
+                      {{form.discord}}    
+                      <span class="helper-text">Discord server link for communication via voice or text ....</span>              
+                    </div>
+                  </div>
+                </div>  
+
+              </div>
+
+              <div class="card card-rounded z-depth-2 white">
+                <div class="card-content">
+                  <span class="card-title flow-text">College Details</span>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="id_college_name" class="black-text"><i class=" material-icons left">mode_edit</i>College Name:</label>
+                      {{form.college_name}}
+                    </div>
+                  </div>  
+
+                  <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                      <label for="id_degree_name" class="black-text"><i class=" material-icons left">mode_edit</i>Degree:</label>
+                      {{form.degree_name}}
+                      <span class="helper-text">Eg: Btech, Mtech,...</span>
+                    </div>
+                  </div>  
+
+                  <div class="row">
+                    <div class="input-field col s12 m12 l12">
+                      <label for="id_course_name" class="black-text"><i class=" material-icons left">mode_edit</i>Course:</label>
+                      {{form.course_name}}
+                      <span class="helper-text">Eg: CSE, MECH...</span>
+                    </div>
+                  </div>  
+
+                  <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                      <label for="id_year_of_joining" class="black-text"><i class=" material-icons left">mode_edit</i>Year of joining:</label>
+                      {{form.year_of_joining}}
+                      <span class="helper-text">Eg: 2000, 2020,...</span>
+                    </div>
+                    <div class="input-field col s12 m6 l6">
+                      <label for="id_ongoing_course_semester" class="black-text"><i class=" material-icons left">mode_edit</i>Semester:</label>
+                      {{form.ongoing_course_semester}}
+                      <span class="helper-text">Eg: 1, 2, or 1st, 2nd...</span>
+                    </div>                    
+                  </div>
+
+                </div> 
+              </div> 
+
+              <center>             
+                <button type="submit" name="submit" value="save" class="btn button-rounded z-depth-2 hoverable flow-text black-text white">
+                <b>Update</b></button>
+              </center>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+      {% endif %}
+
+      {% if update_form %}
+      <div id="update_biodata" class="modal card-rounded">
+        <div class="modal-content black">
+
+          <div class="row">
+            <form class="col s12" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="card card-rounded z-depth-2 white">
+                <div class="card-content">
+                  <span class="card-title flow-text">About you</span>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="id_biography" class="black-text"><i class=" material-icons left">mode_edit</i>Bio:</label>
+                      {{update_form.biography}}
+                      <span class="helper-text">Tell everyone about your personal qualities here like passion, hardworking, etc..</span>
+                    </div>
+                  </div>  
+
+                  <div class="row">  
+                    <div class="col s12 m6 l6">
+                      <label for="id_phone_number" class="black-text"><i class=" material-icons left">phone</i>Phone number:</label>                 
+                      <p>{{update_form.phone_number}}</p>
+                    </div>
+                    <div class="col s12 m6 l6">
+                      <label for="id_profile_pic" class="black-text"><i class=" material-icons left">face</i>Profile pic:</label>                 
+                      <p>{{update_form.profile_pic}}</p>
+                    </div>                    
+                  </div>
+
+                  <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                      <label for="id_github" class="black-text"><i class=" material-icons left">insert_link</i>Github:</label>                 
+                      {{update_form.github}}
+                      <span class="helper-text">This is your github repository link which can people to know your work as well as help in collaborating with you..</span>
+                    </div>  
+                    <div class="input-field col s12 m6 l6">  
+                      <label for="id_discord" class="black-text"><i class=" material-icons left">insert_link</i>Discord:</label>                 
+                      {{update_form.discord}}    
+                      <span class="helper-text">Discord server link for communication via voice or text ....</span>              
+                    </div>
+                  </div>
+                </div>  
+
+              </div>
+
+              <div class="card card-rounded z-depth-2 white">
+                <div class="card-content">
+                  <span class="card-title flow-text">College Details</span>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <label for="id_college_name" class="black-text"><i class=" material-icons left">mode_edit</i>College Name:</label>
+                      {{update_form.college_name}}
+                    </div>
+                  </div>  
+
+                  <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                      <label for="id_degree_name" class="black-text"><i class=" material-icons left">mode_edit</i>Degree:</label>
+                      {{update_form.degree_name}}
+                      <span class="helper-text">Eg: Btech, Mtech,...</span>
+                    </div>
+                  </div>  
+
+                  <div class="row">
+                    <div class="input-field col s12 m12 l12">
+                      <label for="id_course_name" class="black-text"><i class=" material-icons left">mode_edit</i>Course:</label>
+                      {{update_form.course_name}}
+                      <span class="helper-text">Eg: CSE, MECH...</span>
+                    </div>
+                  </div>  
+
+                  <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                      <label for="id_year_of_joining" class="black-text"><i class=" material-icons left">mode_edit</i>Year of joining:</label>
+                      {{update_form.year_of_joining}}
+                      <span class="helper-text">Eg: 2000, 2020,...</span>
+                    </div>
+                    <div class="input-field col s12 m6 l6">
+                      <label for="id_ongoing_course_semester" class="black-text"><i class=" material-icons left">mode_edit</i>Semester:</label>
+                      {{update_form.ongoing_course_semester}}
+                      <span class="helper-text">Eg: 1, 2, or 1st, 2nd...</span>
+                    </div>                    
+                  </div>
+
+                </div> 
+              </div> 
+
+              <center>             
+                <button type="submit" name="submit" value="update" class="btn btn-update button-rounded flow-text black-text white"
+                ><b>Update</b></button>
+              </center>
+
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+      {% endif %}   
+
+  </div>
+</div>
+
+{% endblock body %}

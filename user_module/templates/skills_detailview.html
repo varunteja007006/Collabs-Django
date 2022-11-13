@@ -1,0 +1,198 @@
+{% extends 'base_user_module.html' %}
+{% block title %}Skills Detailview | Collabs{% endblock title %}
+
+{% block body %}
+
+{% for object in obj %}
+    <div class="row card-rounded black" style="margin:20px 20px;">
+        <div class="col s12 m8 l8" style="min-height: 300px">
+
+            <div class="card card-rounded black" style="margin:25px 5px;border: solid 2px #ffffff;">
+                <div class="card-content white-text"> 
+                    <span class="card-title center flow-text">{{object.skill_name|capfirst}}
+
+                        {% if user.username|stringformat:'s' == object.user|stringformat:'s' %}
+
+                            {% if bookmark == False %}
+                                <button class='dropdown-trigger1 btn btn-flat right tooltipped button-rounded hoverable' data-position="top" 
+                                data-tooltip="Options" href='#' data-target='options_detailview' onmouseover="this.style.backgroundColor='#000000';this.style.color='#ffffff'"
+                                onmouseout="this.style.backgroundColor='transparent';this.style.color='inherit'">             
+                                <i class="material-icons white-text">more_vert</i></button>
+                            {% endif %}
+
+                            {% if bookmark == True %}
+                                <button class='dropdown-trigger1 btn btn-flat right tooltipped button-rounded hoverable' data-position="top" 
+                                data-tooltip="Options" href='#' data-target='options_detailview_with_unbookmark' onmouseover="this.style.backgroundColor='#000000';this.style.color='#ffffff'"
+                                onmouseout="this.style.backgroundColor='transparent';this.style.color='inherit'">            
+                                <i class="material-icons white-text">more_vert</i></button>
+                            {% endif %}   
+
+                        {% endif %}
+
+                        {% if user.username|stringformat:'s' != object.user|stringformat:'s' %}
+
+                            {% if bookmark == False %}
+                                <button class='dropdown-trigger2 btn btn-flat right tooltipped button-rounded hoverable' data-position="top" 
+                                data-tooltip="Options" href='#' data-target='options_bookmark' onmouseover="this.style.backgroundColor='#000000';this.style.color='#ffffff'"
+                                onmouseout="this.style.backgroundColor='transparent';this.style.color='inherit'">             
+                                <i class="material-icons white-text">more_vert</i></button>
+                            {% endif %}
+
+                            {% if bookmark == True %}
+                                <button class='dropdown-trigger2 btn btn-flat right tooltipped button-rounded hoverable' data-position="top" 
+                                data-tooltip="Options" href='#' data-target='options_unbookmark' onmouseover="this.style.backgroundColor='#000000';this.style.color='#ffffff'"
+                                onmouseout="this.style.backgroundColor='transparent';this.style.color='inherit'">             
+                                <i class="material-icons white-text">more_vert</i></button> 
+                            {% endif %}     
+
+                        {% endif %}  
+
+                    </span>
+
+                    <ul id='options_detailview' class='dropdown-content transparent'>
+                      <li class="button-rounded white" style="margin:4px 0;">
+                        <a href="#modal1" class="black-text modal-trigger" style="border-radius:10px;">
+                            <i class="material-icons">mode_edit</i>Update</a></li>
+                      <li class="button-rounded white" style="margin:2px 0;">
+                        <a href="#modal2" class="black-text modal-trigger" style="border-radius:10px;">
+                            <i class="material-icons">bookmark</i>Bookmark</a></li>
+                      <li class="button-rounded white" style="margin:2px 0;">
+                        <a href="#modal3" class="black-text modal-trigger" style="border-radius:10px;">
+                            <i class="material-icons">delete</i>Delete</a></li>
+                    </ul>
+
+                    <ul id='options_detailview_with_unbookmark' class='dropdown-content'>
+                      <li class="button-rounded white" style="margin:4px 0;">
+                        <a href="#modal1" class="black-text modal-trigger" style="border-radius:10px;">
+                            <i class="material-icons">mode_edit</i>Update</a></li>
+                      <li class="button-rounded white" style="margin:4px 0;">
+                        <a href="#modal4" class="black-text modal-trigger" style="border-radius:10px;">
+                            <i class="material-icons">bookmark_border</i>Remove Bookmark</a></li>
+                      <li class="button-rounded white" style="margin:4px 0;">
+                        <a href="#modal3" class="black-text modal-trigger" style="border-radius:10px;">
+                            <i class="material-icons">delete</i>Delete</a></li>
+                    </ul>      
+
+                    <ul id='options_bookmark' class='dropdown-content'>
+                      <li class="button-rounded white" style="margin:4px 0;">
+                        <a href="#modal2" class="black-text modal-trigger" style="border-radius:10px;">
+                            <i class="material-icons">bookmark</i>Bookmark</a></li>
+                    </ul>  
+
+                    <ul id='options_unbookmark' class='dropdown-content'>
+                      <li class="button-rounded white" style="margin:4px 0;">
+                        <a href="#modal4" class="black-text modal-trigger" style="border-radius:10px;">
+                            <i class="material-icons">bookmark_border</i>Remove Bookmark</a></li>
+                    </ul>   
+
+                    <li class="divider" tabindex="-1"></li><br> 
+                    <p style="text-align: justify;"><em>{{object.skill_description|capfirst}}</em></p><br>  
+                    {% if object.skill_link %}
+                        <p style="text-align: justify;">Check my skills via this Gdrive link
+                        <em><a href="{{object.skill_link}}" class="black-text">{{object.skill_link}}</a></em></p><br>  
+                    {% endif %}
+                    <p class="center">Date created: {{object.skill_date|date:"F d, Y"}}</p>  
+
+                </div>
+            </div>
+        </div> 
+
+        <div class="col s12 m4 l4">
+
+            <div class="card card-rounded tooltipped blue-grey darken-3" data-position="bottom" data-tooltip="User Info"
+                style="margin:25px 5px;">
+                <div class="card-content white-text"> 
+                    <span class="card-title center flow-text">Details about the person...</span>
+                    <ul>
+                    {% for profile in profile_obj  %}
+                        <li>Name: {{profile.user|capfirst}}</li>
+                        <li>Email: {{profile.email}}</li>
+                        <li class="truncate">Github<i class=" material-icons left">insert_link</i> : <a href="{{profile.github}}" class="black-text">{{profile.github}}</a></li>
+                        <li class="truncate">Discord<i class=" material-icons left">insert_link</i> : <a href="{{profile.discord}}" class="black-text">{{profile.discord}}</a></li>
+                        <li>Phone: {{profile.phone_number}}</li>
+                        <li>College: {{profile.college_name}}</li>
+                        {% if profile.degree_name %}
+                        <li>{{profile.degree_name}}, {{profile.course_name}}</li>
+                        <li>Semester: {{profile.ongoing_course_semester}}</li>
+                        {% endif %}
+                    {% endfor %} 
+                    </ul>   
+                </div>
+            </div>
+
+        </div> 
+
+        <div id="modal1" class="modal card-rounded white">
+            <div class="modal-content black-text">
+                <h4 class="flow-text">Update your skill</h4>
+                <form method='POST'>
+                {% csrf_token %}
+                    <i class=" material-icons right">mode_edit</i>
+                    <label for="id_skill_name" class="white-text"><h6>Skill :</h6></label>
+                    {{form.skill_name}}
+                    <i class=" material-icons right">mode_edit</i>
+                    <label for="id_skill_description" class="white-text"><h6>Description :</h6></label>
+                    {{form.skill_description}}
+                    <i class=" material-icons right">mode_edit</i>
+                    <label for="id_skill_link" class="white-text"><h6>Link :<h6></label>
+                    {{form.skill_link}}                      
+                    <center>
+                        <button type="submit" name="submit" value="update" class="btn-flat button-rounded flow-text yellow black-text tooltipped"
+                        data-position="bottom" data-tooltip="Update" style="margin:10px 0"><b>Update</b>
+                        </button>
+                    </center>
+                </form>
+            </div>
+        </div> 
+
+        <div id="modal2" class="modal card-rounded white">
+            <div class="modal-content black-text">
+                <h4 class="flow-text">Bookmark the skill</h4>
+                <p class="flow-text">Bookmark this skill for future use?</p>
+                <form method='POST'>
+                {% csrf_token %}
+                    <button type="submit" name="submit" value="bookmark" class="btn-flat button-rounded flow-text yellow black-text tooltipped"
+                    data-position="bottom" data-tooltip="Bookmark"><b>Bookmark</b>
+                    </button>
+                </form>
+            </div>
+        </div>   
+
+        <div id="modal3" class="modal card-rounded white">
+            <div class="modal-content black-text">
+              <h4 class="flow-text">Delete your skill</h4>
+              <p class="flow-text">Are you sure you want to delete ?</p>
+              <p class="flow-text">This action is irreversible.</p>
+            </div>
+            <div class="modal-footer" style="background-image: linear-gradient(56deg, rgb(50,52,221) 0%,rgba(26, 218, 182, 0.15) 100%),linear-gradient(336deg, rgb(50, 52, 221),rgb(60, 239, 241));">
+                <form method='POST'>
+                {% csrf_token %}        
+                    <button type="submit" name="submit" value="yes" class="button-rounded btn-flat flow-text red white-text tooltipped" 
+                    data-position="top" data-tooltip="Delete Permanently">
+                    Yes, I want to delete</button>
+                    <button class="modal-close btn-flat green button-rounded flow-text black-text tooltipped"
+                    data-position="top" data-tooltip="Cancel">
+                    No, Cancel</button>
+                </form>
+            </div>
+        </div> 
+
+        <div id="modal4" class="modal card-rounded white">
+            <div class="modal-content black-text">
+                <h4 class="flow-text">Remove the skill from bookmarks</h4>
+                <p class="flow-text">This skill will be removed from your bookmark list.</p>
+                <form method='POST'>
+                {% csrf_token %}
+                    <button type="submit" name="submit" value="unbookmark" class="btn-flat flow-text yellow black-text tooltipped" 
+                    data-position="bottom" data-tooltip="Remove Bookmark"><b>Remove Bookmark</b>
+                    </button>
+                </form>
+            </div>
+        </div> 
+
+    </div>
+{% endfor %}
+ 
+
+{% endblock body %}
+
