@@ -69,4 +69,49 @@
         </div>
       </div>
     </footer>
+          <!--  Scripts-->
+      {% load static %}
+      <script type="text/javascript" src="{%static 'js/bin/materialize.js'%}"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script>
+        $(document).ready(function(){
+          $('.sidenav').sidenav({edge:'left'});
+        })
+        $(document).ready(function(){
+          $('.carousel').carousel();
+        })
+        $(document).ready(function(){
+          $('.materialboxed').materialbox();
+        })
+        $(document).ready(function(){
+          $('.modal').modal();
+        });  
+        $(document).ready(function(){
+          $('.tabs').tabs();
+        });
+        $(document).ready(function(){
+          $('.collapsible').collapsible();
+        }); 
+        $(document).ready(function(){
+          $('.tooltipped').tooltip();
+        });
+        $('.dropdown-trigger').dropdown({coverTrigger:false,hover:true,constrainWidth:false});
+        $('.dropdown-trigger1').dropdown({coverTrigger:false,constrainWidth:false});
+        $('.dropdown-trigger2').dropdown({coverTrigger:false,constrainWidth:false});
+        $(document).ready(function() {
+        M.updateTextFields();
+        });
+        $(document).ready(function(){
+          $('select').formSelect();
+        });
+        $(document).ready(function(){
+          $(".navbtn").hover(function(){
+            $(this).css("border-radius", "15px");
+          },
+          function(){
+            $(this).css("border-radius", "15px");
+          }); 
+        });  
+      </script>
   </html>
